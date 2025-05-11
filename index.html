@@ -206,7 +206,7 @@
     ];
 
     function parseJamOperasional(jamStr) {
-      const hariMap = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      const hariMap = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
       const hariIni = new Date();
       const hariSekarang = hariMap[hariIni.getDay()];
       const waktuSekarang = hariIni.getHours() * 60 + hariIni.getMinutes();
