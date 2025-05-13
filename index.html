@@ -251,9 +251,7 @@ Makmur hidayat: "Aplikasi dalam Pengembangan, Toko yang ready sudah bisa di orde
           <p>${item.jam}</p>
         `;
         card.innerHTML = isi;
-        if (buka) {
           card.onclick = () => window.location.href = item.link;
-        }
         container.appendChild(card);
       });
     }
