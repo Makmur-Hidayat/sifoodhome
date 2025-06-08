@@ -762,7 +762,7 @@
                     <div class="form-group">
                         <div id="shopping-list-container">
                             <div class="shopping-item-row shopping-item-header">
-                                <span>No.</span><span>Nama Barang</span><span>Jumlah</span><span>Satuan</span>
+                                <span>No.</span><span>Nama Barang</span><span>Jumlah</span><span>keterangan</span>
                             </div>
                             <div class="shopping-item-row">
                                  <span>1.</span>
@@ -1435,7 +1435,7 @@ function addShoppingListItem(item = { name: '', qty: '', unit: '' }) {
         <span>${itemCount}.</span>
         <input type="text" class="form-control shopping-item-name" placeholder="Nama Barang" value="${item.name}">
         <input type="number" class="form-control shopping-item-qty" placeholder="Jml" value="${item.qty}">
-        <input type="text" class="form-control shopping-item-unit" placeholder="Satuan" value="${item.unit}">
+        <input type="text" class="form-control shopping-item-unit" placeholder="keterangan" value="${item.unit}">
     `;
     shoppingListContainer.appendChild(newRow);
 }
@@ -1530,7 +1530,7 @@ function handleHistoryClickKurir(e) {
 
     if (order.service === 'Titip Beli') {
         shoppingCostEl.value = order.shoppingCost || '';
-        shoppingListContainer.innerHTML = `<div class="shopping-item-row shopping-item-header"><span>No.</span><span>Nama Barang</span><span>Jumlah</span><span>Satuan</span></div>`;
+        shoppingListContainer.innerHTML = `<div class="shopping-item-row shopping-item-header"><span>No.</span><span>Nama Barang</span><span>Jumlah</span><span>keterangan</span></div>`;
         if (order.shoppingList && order.shoppingList.length > 0) {
             order.shoppingList.forEach(item => addShoppingListItem(item));
         }
@@ -1612,7 +1612,7 @@ function submitOrderKurir() {
                 if (name || qty || unit) {
                     if (!name) return showToast(`Lengkapi Belanjaan: Nama barang di baris ${i} wajib diisi!`, 'error');
                     if (!qty) return showToast(`Lengkapi Belanjaan: Jumlah untuk "${name}" wajib diisi!`, 'error');
-                    if (!unit) return showToast(`Lengkapi Belanjaan: Satuan untuk "${name}" wajib diisi! (cth: pcs, kg, liter)`, 'error');
+                    if (!unit) return showToast(`Lengkapi Belanjaan: Keterangan untuk "${name}" wajib diisi! (cth: pcs, kg, liter)`, 'error');
                     shoppingItems.push({ name, qty, unit });
                 }
             }
