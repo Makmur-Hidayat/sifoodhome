@@ -330,6 +330,64 @@
         }
         /* Warna placeholder diatur per elemen gambar di atas, misal .store-image-container, .menu-image */
 
+        /* === STYLES UNTUK IMAGE SLIDER === */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 412px; /* Menyesuaikan dengan lebar container utama */
+            margin:auto;
+            margin-top: 3px; /* Jarak dari search bar */
+            margin-bottom: 10px; /* Jarak ke daftar warung */
+            overflow: hidden;
+            border-radius: 15px; /* Sudut yang sedikit melengkung */
+            aspect-ratio: 16 / 8,5; /* Membuat rasio gambar lebih lebar, cocok untuk promo */
+            background-color: #eee; /* Warna placeholder */
+        }
+
+        .slider-wrapper {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Memastikan gambar memenuhi slide tanpa distorsi */
+            display: block;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: var(--primary-color);
+        }
+        /* === AKHIR STYLES UNTUK IMAGE SLIDER === */
+
+
 /* === CSS LENGKAP DAN SIAP PAKAI UNTUK FITUR KURIR === */
 
 /* Container Utama */
@@ -610,6 +668,18 @@
             <header class="app-header">
                 <input type="search" id="search-bar" placeholder="SIFOOD: Cari warung atau menu disini...">
             </header>
+            <div class="slider-container">
+                <div class="slider-wrapper">
+                    <div class="slide"><img src="https://i.ibb.co.com/dJLmZGhp/IMG-20250508-230725-5-11zon.jpg" alt="Promo Sifood 1"></div>
+                    <div class="slide"><img src="https://i.ibb.co.com/bgTQ546y/IMG-20250508-232846-1-11zon.jpg" alt="Promo Sifood 2"></div>
+                    <div class="slide"><img src="https://i.ibb.co.com/mVG9k98W/IMG-20250508-230752-4-11zon.jpg" alt="Promo Sifood 3"></div>
+                    <div class="slide"><img src="https://i.ibb.co.com/ZR6VbPM7/IMG-20250508-230825-3-11zon.jpg" alt="Promo Sifood 4"></div>
+                    <div class="slide"><img src="https://i.ibb.co.com/bgTQ546y/IMG-20250508-232846-1-11zon.jpg" alt="Promo Sifood 5"></div>
+                </div>
+                <div class="slider-dots"></div>
+            </div>
+
+
             <main id="store-list-container"></main>
         </div>
 
@@ -1158,6 +1228,57 @@
             const menuItemTemplate = document.getElementById('menu-item-template');
             const cartItemTemplate = document.getElementById('cart-item-template');
             const historyItemTemplate = document.getElementById('history-item-template');
+
+        // --- IMAGE SLIDER LOGIC ---
+        const sliderWrapper = document.querySelector('.slider-wrapper');
+        if (sliderWrapper) {
+            const slides = document.querySelectorAll('.slide');
+            const sliderDotsContainer = document.querySelector('.slider-dots');
+            let currentIndex = 0;
+            let slideInterval;
+
+            // Buat dots secara dinamis
+            slides.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.classList.add('dot');
+                dot.dataset.index = index;
+                if (index === 0) dot.classList.add('active');
+                sliderDotsContainer.appendChild(dot);
+            });
+
+            const dots = document.querySelectorAll('.dot');
+
+            const showSlide = (index) => {
+                sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
+                dots.forEach(d => d.classList.remove('active'));
+                dots[index].classList.add('active');
+            };
+
+            const nextSlide = () => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                showSlide(currentIndex);
+            };
+
+            const startSlider = () => {
+                slideInterval = setInterval(nextSlide, 2000); // Ganti gambar setiap 2 detik
+            };
+            
+            const resetSliderInterval = () => {
+                clearInterval(slideInterval);
+                startSlider();
+            };
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    currentIndex = parseInt(dot.dataset.index);
+                    showSlide(currentIndex);
+                    resetSliderInterval(); // Reset interval saat dot di klik
+                });
+            });
+
+            startSlider();
+        }
+
 
             let cart = loadCart();
             let orderHistory = loadHistory();
