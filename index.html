@@ -654,6 +654,16 @@
 }
 /* === AKHIR CSS UNTUK FITUR KURIR === */
 
+/* === CSS UNTUK FOOTER COPYRIGHT === */
+        .app-footer {
+            text-align: center;
+            padding: 5px 5px; /* Memberi jarak atas/bawah */
+            font-size: 0.95em;  /* Ukuran font sedikit lebih kecil */
+            color: #888;         /* Warna abu-abu agar tidak terlalu mencolok */
+            border-top: 1px solid var(--border-color); /* Garis pemisah tipis */
+            margin-top: 5px; /* Jarak dari konten di atasnya */
+        }
+        /* === AKHIR CSS UNTUK FOOTER COPYRIGHT === */
 
 
     </style>
@@ -825,6 +835,9 @@
             <main id="history-items-container"><p class="empty-history-message">Belum ada riwayat pesanan.</p></main>
         </div>
     </div>
+<footer class="app-footer">
+    <p>© <span id="copyright-year"></span> Sipora Food. All Rights Reserved.</p>
+</footer>
 
     <nav id="bottom-navigation">
         <button data-page="home" class="nav-button active"><i class="fas fa-home"></i> <span class="nav-text">Home</span></button>
@@ -904,6 +917,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
             // --- GLOBAL LOADER ELEMENTS ---
             const appLoaderOverlay = document.getElementById('app-loader-overlay');
 
